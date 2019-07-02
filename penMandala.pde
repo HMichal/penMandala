@@ -68,7 +68,7 @@ int slices = 12;
 color picolor = 0;
 PVector []nek;
 float factor=1;
-int pal;
+int pal = 0;
 int pix;
 
 void setup() {
@@ -93,8 +93,9 @@ void initit() {
   if (circles) 
     drawPerch = true;
   buf.endDraw();
-  pal = round(random(5000)) % 22;
+  //pal = round(random(5000)) % 22;
   //pix = round(random(3400)) % 5;
+  pal = (pal + 1) % 22;
   pix = 0;
   picolor = tablePens[pal][pix];
 }
