@@ -12,17 +12,17 @@
  * n                   : new image
  * r                   : start recording PDF
  * e                   : end recording PDF and save
- * o                   : open file for a pallette
  * w                   : toogle background black or white
  * l                   : toogle lines
  * m                   : toogle Mandala
  * t                   : toogle transparent 
- * 1-2                 : 1 - decrease number of agents and 2 - increase
- * 3-4                 : 1 - decrease number of spots and 2 - increase
+ * 1-2                 : 1 - decrease pen width and 2 - increase
+ * 3-4                 : 3 - decrease number petals and 4 - increase
  * space               : new noise seed
  * backspace           : clear screen
  * s                   : save png
  * c                   : change color in the current pallette
+ * p                   : toggle Flower of life on/off
  */
 
 float agentsAlpha = 90, strokeW = 3;
@@ -44,7 +44,16 @@ color [][]tablePens = {
   {#EE693F, #F69454, #FCFDFE, #739F3D, #F68454},
   {#F70025, #F7EFE2, #F25C00, #F9A603, #FFFFFF},
   {#A1BE95, #E2DFA2, #92AAC7, #ED5752, #FFFFFF},
-  {#4897D8, #FFDB5C, #FA6E59, #F8A055, #FFFFFF}
+  {#4897D8, #FFDB5C, #FA6E59, #F8A055, #FFFFFF},
+  {#00293c, #1e656d, #f1f3ce, #f62a00, #f2ee7e},
+  {#626d71, #cdcdc0, #ddbc95, #b38867, #ffffff},
+  {#258039, #f5be41, #31a9b8, #cf3721, #212117},
+  {#b9d9c3, #752a07, #fbcb7b, #eb5e30, #ffffff},
+  {#1e1f26, #283655, #4d648d, #d0e1f9, #e4ebfa},
+  {#a1be95, #e2dfa2, #92aac7, #ed5752, #ffffff},
+  {#4897d8, #ffdb5c, #fa6e59, #f8a055, #ffffff},
+  {#af4425, #662e1c, #ebdcb2, #c9a66b, #ffffff},
+  {#c1e1dc, #ffccac, #fbf190, #fdd475, #ffffff}  
 };
 
 boolean halt = false;
@@ -84,18 +93,19 @@ void initit() {
   if (circles) 
     drawPerch = true;
   buf.endDraw();
-  pal = round(random(5000)) % 13;
-  pix = round(random(3400)) % 5;
+  pal = round(random(5000)) % 22;
+  //pix = round(random(3400)) % 5;
+  pix = 0;
   picolor = tablePens[pal][pix];
 }
 
 void draw() {  
   if (transp) {
-    stroke(picolor, 80);
-    buf.stroke(picolor, 80);
+    stroke(picolor, 120);
+    buf.stroke(picolor, 120);
   } else {
-    stroke(picolor);
-    buf.stroke(picolor);
+    stroke(picolor, 240);
+    buf.stroke(picolor, 240);
   }
   strokeWeight(strokeW);
   buf.strokeWeight(strokeW *factor);
@@ -218,7 +228,7 @@ void keyReleased() {
   }
   if (key == '2') {
     strokeW += 0.3;
-    if (strokeW > 0.6) strokeW -= 0.3;
+    if (strokeW > 20) strokeW -= 0.3;
   }
   if (key == '3') {
     slices -= 2;
@@ -234,7 +244,7 @@ void keyReleased() {
     initit();
   }
   if (key == 'c' || key =='C') {
-    pix = round(random(3400)) % 5;
+    pix = (pix + 1) % 5;
     picolor = tablePens[pal][pix];
   }
   if (key == 'p' || key =='P') {
