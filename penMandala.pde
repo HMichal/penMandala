@@ -8,7 +8,6 @@
  * KEYS
  * y                   : toogle symmetry
  * s                   : save image as png
- * h                   : halt or continue
  * n                   : new image
  * r                   : start recording PDF
  * e                   : end recording PDF and save
@@ -56,8 +55,7 @@ color [][]tablePens = {
   {#c1e1dc, #ffccac, #fbf190, #fdd475, #ffffff}  
 };
 
-boolean halt = false;
-boolean transp = true;
+boolean transp = false;
 boolean pen = true;
 boolean fromPIC = true;
 boolean toDraw = false;
@@ -72,7 +70,7 @@ int pal = 0;
 int pix;
 
 void setup() {
-  size(600, 600); //(1200,676); //(1280,1024); //(900, 506); //size(1280,800,P3D);//16:9
+  size(800, 800); //(1200,676); //(1280,1024); //(900, 506); //size(1280,800,P3D);//16:9
   background(bg);
   smooth();
   frameRate(5);
@@ -205,12 +203,6 @@ void keyReleased() {
   if (key == 'n' || key == 'N') {
     initit();
   }
-  if (key == 'h' || key == 'H') {
-    halt = !halt;
-    if (halt)
-      noLoop();
-    else loop();
-  }
 
   if (key == 's' || key == 'S') {
     int numR = int(random(5000));
@@ -250,7 +242,7 @@ void keyReleased() {
   }
   if (key == 'p' || key =='P') {
     circles = !circles;
-    makefl();
+    if (circles) makefl();
   }
 }
 
