@@ -73,6 +73,16 @@ void setup() {
   size(800, 800); //(1200,676); //(1280,1024); //(900, 506); //size(1280,800,P3D);//16:9
   background(bg);
   smooth();
+  /*
+  String []fonts = PFont.list();
+  println("Fonts available:");
+  for (int ix=0; ix < fonts.length; ix++) {
+    println(fonts[ix]);
+  }
+  */
+  
+  textFont(createFont("Comic Neue Angular Bold Oblique", 16), 24);
+  
   frameRate(5);
   nek = new PVector[4];
   for (int i=0; i<4; i++)
@@ -205,6 +215,12 @@ void keyReleased() {
   }
 
   if (key == 's' || key == 'S') {
+    
+    if (bg == 0) fill(255);
+    else fill(0);
+    text("M.H.", 30, height - 30);
+    noFill();
+    
     int numR = int(random(5000));
     String fname="kal_" + year() + month() + day() + "_" + frameCount +"_" + numR + ".png";
     String bufSave = "h"+fname;
