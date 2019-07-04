@@ -52,14 +52,35 @@ color [][]tablePens = {
   {#a1be95, #e2dfa2, #92aac7, #ed5752, #ffffff},
   {#4897d8, #ffdb5c, #fa6e59, #f8a055, #ffffff},
   {#af4425, #662e1c, #ebdcb2, #c9a66b, #ffffff},
-  {#c1e1dc, #ffccac, #fbf190, #fdd475, #ffffff}  
+  {#c1e1dc, #ffccac, #fbf190, #fdd475, #ffffff},
+  {#2e2300, #6e6702, #c05805, #db9501, #8598b6},
+  {#faaf08, #fa812f, #fa4032, #fef3e2, #96bd83},
+  {#f4ec6a, #bbcf4a, #e73f0b, #a11f0c, #929c32},
+  {#fef2e4, #fd974f, #c60000, #805a3b, #acb70c},
+  {#f77604, #b8d20b, #f56c57, #231b12, #df1a00},
+  {#7f152e, #d61800, #edae01, #e94f08, #718700},
+  {#f47d4a, #e1315b, #ffec5c, #008dcb, #ffffff},
+  {#a4cabc, #eab364, #b2473e, #acbd78, #36845b},
+  {#a5c3cf, #f3d3b8, #e59d5c, #a99f3c, #807418},
+  {#8c0004, #c8000a, #e8a735, #e2c499, #89774e},
+  {#344d90, #5cc5ef, #ffb745, #e7552c, #fdf5d3},
+  {#688b8a, #a0b084, #faefd4, #a57c65, #6e4c49},
+  {#882426, #cdbea7, #323030, #c29545, #6a5924},
+  {#ffbebd, #fcfcfa, #337bae, #1a405f, #8ccf00},
+  {#81715e, #faae3d, #e38533, #e4535e, #c82a6f},
+  {#061283, #fd3c3c, #ffb74c, #138d90, #ffffff},
+  {#b3dbc1, #fe0000, #fef6f6, #67baca, #e8003f},
+  {#fe9c8f, #feb2a8, #fec8c1, #fad9c1, #f9caa7},
+  {#96ceb4, #ffeead, #ff6f69, #ffcc5c, #88d8b0},
+  {#461220, #8c2f39, #b23a48, #fcb9b2, #fed0bb},
+  {#faa257, #ff8c61, #ce6a85, #985277, #5c374c}
 };
 
 boolean transp = false;
 boolean pen = true;
 boolean fromPIC = true;
 boolean toDraw = false;
-boolean circles = true;
+boolean circles = false;
 boolean drawPerch = false;
 
 int slices = 12;
@@ -80,10 +101,10 @@ void setup() {
     println(fonts[ix]);
   }
   */
-  
+ 
   textFont(createFont("Comic Neue Angular Bold Oblique", 16), 24);
   
-  frameRate(5);
+  frameRate(10);
   nek = new PVector[4];
   for (int i=0; i<4; i++)
     nek[i] = new PVector(0, 0);
@@ -103,7 +124,7 @@ void initit() {
   buf.endDraw();
   //pal = round(random(5000)) % 22;
   //pix = round(random(3400)) % 5;
-  pal = (pal + 1) % 22;
+  pal = (pal + 1) % tablePens.length;
   pix = 0;
   picolor = tablePens[pal][pix];
 }
@@ -250,10 +271,10 @@ void keyReleased() {
 
   if (key == 'w' || key =='W') {
     bg = 255 - bg;
-    initit();
+    background(bg);
   }
   if (key == 'c' || key =='C') {
-    pix = (pix + 1) % 5;
+    pix = (pix + 1) % tablePens[0].length;
     picolor = tablePens[pal][pix];
   }
   if (key == 'p' || key =='P') {
