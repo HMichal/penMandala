@@ -91,7 +91,7 @@ int pal = 0;
 int pix;
 
 void setup() {
-  size(800, 800); //(1200,676); //(1280,1024); //(900, 506); //size(1280,800,P3D);//16:9
+  size(900, 900); //(1200,676); //(1280,1024); //(900, 506); //size(1280,800,P3D);//16:9
   background(bg);
   smooth();
   /*
@@ -102,7 +102,8 @@ void setup() {
   }
   */
  
-  textFont(createFont("Comic Neue Angular Bold Oblique", 16), 24);
+  //textFont(createFont("Comic Neue Angular Bold Oblique", 16), 24);
+  textFont(createFont("URW Gothic L Book Oblique", 16), 24);
   
   frameRate(10);
   nek = new PVector[4];
@@ -137,6 +138,7 @@ void draw() {
     stroke(picolor, 240);
     buf.stroke(picolor, 240);
   }
+  
   strokeWeight(strokeW);
   buf.strokeWeight(strokeW *factor);
   noFill();
@@ -258,7 +260,7 @@ void keyReleased() {
   }
   if (key == '2') {
     strokeW += 0.3;
-    if (strokeW > 20) strokeW -= 0.3;
+    if (strokeW > 50) strokeW -= 0.3;
   }
   if (key == '3') {
     slices -= 2;
@@ -272,6 +274,8 @@ void keyReleased() {
   if (key == 'w' || key =='W') {
     bg = 255 - bg;
     background(bg);
+    buf.beginDraw();
+    buf.background(bg);
   }
   if (key == 'c' || key =='C') {
     pix = (pix + 1) % tablePens[0].length;
