@@ -75,7 +75,9 @@ color [][]tablePens = {
   {#461220, #8c2f39, #b23a48, #fcb9b2, #fed0bb}, 
   {#faa257, #ff8c61, #ce6a85, #985277, #5c374c}
 };
-
+color []bottom2top = new color[4];
+float []wBot2top = new float[4];
+int transColor;
 boolean transp = false;
 boolean pen = true;
 boolean fromPIC = true;
@@ -114,6 +116,7 @@ void setup() {
   buf = createGraphics(1600, 1600);
   factor = float(buf.width)/width;
   //noLoop();
+  strokeCap(ROUND);
   initit();
 }
 
@@ -129,36 +132,19 @@ void initit() {
   pal = (pal + 1) % tablePens.length;
   pix = 0;
   picolor = tablePens[pal][pix];
-}
-
-void draw() { 
-  color []bottom2top = new color[4];
-  float []wBot2top = new float[4];
-  strokeCap(ROUND);
-  int transColor;
+  bottom2top = new color[4];
+  wBot2top = new float[4];
   if (transp) {
-    transColor = 120;
+    transColor = 90;
   } else {
     transColor = 240;
   }
+  SetThreadValues();
+}
 
-  for (int ic=0; ic < bottom2top.length; ic++) {
-    float cInc = 0.75 + ic*0.1;
-    if (thread) {
-      bottom2top[ic] = color(red(picolor) * cInc, 
-        green(picolor) * cInc, 
-        blue(picolor) * cInc, 
-        transColor);
-      wBot2top[ic] = strokeW * (1.7 - ic*0.55);
-    } else {
-      bottom2top[ic] = color(picolor, transColor);
-      wBot2top[ic] = strokeW;
-    }
-  }
-
+void draw() { 
   noFill();
   buf.noFill();
-
   buf.beginDraw();
   if (toDraw) {
     /////////////// Mandala //////////////
@@ -278,6 +264,12 @@ void keyReleased() {
   }
   if (key == 't' || key =='T') {
     transp = !transp;
+    if (transp) {
+      transColor = 90;
+    } else {
+      transColor = 240;
+    }
+    SetThreadValues();
   }
   if (key == '1') {
     strokeW -= 0.3;
@@ -305,6 +297,7 @@ void keyReleased() {
   if (key == 'c' || key =='C') {
     pix = (pix + 1) % tablePens[0].length;
     picolor = tablePens[pal][pix];
+    SetThreadValues();
   }
   if (key == 'p' || key =='P') {
     buf.beginDraw();
@@ -327,30 +320,8 @@ void mouseReleased() {
 
 void makefl() {
   float koter = width/3;
-  color []bottom2top = new color[4];
-  float []wBot2top = new float[4];
-  int transColor;
-  if (transp) {
-    transColor = 120;
-  } else {
-    transColor = 240;
-  }
-
-  for (int ic=0; ic < bottom2top.length; ic++) {
-    float cInc = 0.8 + ic*0.1;
-    if (thread) {
-      bottom2top[ic] = color(red(picolor) * cInc, 
-        green(picolor) * cInc, 
-        blue(picolor) * cInc, 
-        transColor);
-      wBot2top[ic] = strokeW * (1.6 - ic*0.5);
-    } else {
-      bottom2top[ic] = color(picolor, transColor);
-      wBot2top[ic] = strokeW;
-    }
-  }
-
   int till = 1;
+  
   if (thread) till = bottom2top.length;
   pushMatrix();
   buf.pushMatrix();
@@ -404,4 +375,20 @@ void makefl() {
 
   popMatrix();
   buf.popMatrix();
+}
+
+void SetThreadValues() {
+  for (int ic=0; ic < bottom2top.length; ic++) {
+    float cInc = 0.75 + ic*0.1;
+    if (thread) {
+      bottom2top[ic] = color(red(picolor) * cInc, 
+        green(picolor) * cInc, 
+        blue(picolor) * cInc, 
+        transColor);
+      wBot2top[ic] = strokeW * (1.7 - ic*0.55);
+    } else {
+      bottom2top[ic] = color(picolor, transColor);
+      wBot2top[ic] = strokeW;
+    }
+  }
 }
