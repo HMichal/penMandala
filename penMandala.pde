@@ -134,6 +134,7 @@ void initit() {
 void draw() { 
   color []bottom2top = new color[4];
   float []wBot2top = new float[4];
+  strokeCap(ROUND);
   int transColor;
   if (transp) {
     transColor = 120;
@@ -142,13 +143,13 @@ void draw() {
   }
 
   for (int ic=0; ic < bottom2top.length; ic++) {
-    float cInc = 0.8 + ic*0.1;
+    float cInc = 0.75 + ic*0.1;
     if (thread) {
       bottom2top[ic] = color(red(picolor) * cInc, 
         green(picolor) * cInc, 
         blue(picolor) * cInc, 
         transColor);
-      wBot2top[ic] = strokeW * (1.6 - ic*0.5);
+      wBot2top[ic] = strokeW * (1.7 - ic*0.55);
     } else {
       bottom2top[ic] = color(picolor, transColor);
       wBot2top[ic] = strokeW;
